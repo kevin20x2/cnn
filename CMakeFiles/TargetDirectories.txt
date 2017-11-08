@@ -1,0 +1,3 @@
+/home/kevin/deal_model/CMakeFiles/rebuild_cache.dir
+/home/kevin/deal_model/CMakeFiles/edit_cache.dir
+/home/kevin/deal_model/CMakeFiles/deal_model.bin.dir

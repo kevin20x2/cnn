@@ -1,0 +1,1 @@
+/usr/bin/c++  -g  -rdynamic CMakeFiles/deal_model.bin.dir/deal_model.cpp.o  -o deal_model.bin  -L/home/kevin/caffe-master/build/lib  -L/opt/OpenBLAS/lib  -L/usr/local/lib -Wl,-rpath,/home/kevin/caffe-master/build/lib:/opt/OpenBLAS/lib:/usr/local/lib -lcaffe -lopenblas -lglog -lgflags -lprotobuf -lboost_system -lboost_filesystem 
