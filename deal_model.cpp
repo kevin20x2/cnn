@@ -14,8 +14,8 @@ Phase phase = TEST;
 int main()
 {
 
-	Caffe::set_mode(Caffe::CPU);
-	boost::shared_ptr < Net<float> > net(new caffe::Net<float>(proto,phase));
+//	Caffe::set_mode(Caffe::CPU);
+//	boost::shared_ptr < Net<float> > net(new caffe::Net<float>(proto,phase));
 	//net->CopyTrainedLayersFrom(model);
 	NetParameter param;
 	ReadNetParamsFromBinaryFileOrDie(model,&param);
@@ -27,7 +27,8 @@ int main()
     //net->Init(param);
 	int num_layers = param.layer_size();
 
-    auto layer_list = net->layers();
+    //auto layer_list = net->layers();
+	float truncate_radio = 0.1f;
 
     for(int i =0;i<num_layers;++i)
     {
@@ -42,10 +43,20 @@ int main()
             //layer_list[i]->blobs().resize(blob_num);
             for(int j = 0;j<blob_num;++j)
             {
+				int new_num = (1-truncate_radio)*param.layer(i).blobs(j).num();
+				
+				int channels =    param.layer(i).blobs(j).channels();
+			    int height  = param.layer(i).blobs(j).height();
+				 int wight = param.layer(i).blobs(j).width();
+
 				LOG(ERROR) <<"num"<<param.layer(i).blobs(j).num() <<
 				   "channel"<<param.layer(i).blobs(j).channels()<<
 			    "height" <<param.layer(i).blobs(j).height()<<"width" <<
-		      param.layer(i).blobs(j).width();
+				 param.layer(i).blobs(j).width();
+				param.layer(i).blobs(j).set_num(new_num);
+                LOG(ERROR)<<"blob data origin size:"<<j<<" "<<param.layer(i).blobs(j).data().size();
+				param.layer(i).blobs().data().Truncate(new_num*channels*height*wight);
+				
                 //Blob <float > * weights;
                 //if( layer_list[i]->blobs().size()>0) {
                   //  weights = layer_list[i]->blobs()[0].get();
@@ -65,6 +76,8 @@ int main()
 
         }
     }
+	std::string new_model_name = "radio10vgg19.caffemodel";
+	WriteProtoToBinaryFile(param,new_model_name);
 
     return 0;
 }

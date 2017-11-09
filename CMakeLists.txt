@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.6)
 project(deal_model)
 
 set(CMAKE_CXX_STANDARD 11)
-set(CAFFE_ROOT /home/kevin/caffe-master)
+set(CAFFE_ROOT /home/kevin/caffe)
 INCLUDE_DIRECTORIES(/opt/OpenBLAS/include)
 INCLUDE_DIRECTORIES(${CAFFE_ROOT}/include)
 INCLUDE_DIRECTORIES(${CAFFE_ROOT}/build/src)
